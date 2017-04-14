@@ -1,0 +1,32 @@
+{
+  "name": "configurapi-handler-http",
+  "version": "1.0.0",
+  "description": "Configurapi request handlers for HTTP",
+  "main": "src/index",
+  "files": [
+    "src/*"
+  ],
+  "scripts": {
+    "lint": "jshint src/",
+    "test": "cd test && mocha ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mappies/configurapi-handler-http.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mappies/configurapi-handler-http/issues"
+  },
+  "homepage": "https://github.com/mappies/configurapi-handler-http#readme",
+  "dependencies": {
+    "configurapi": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "jshint": "^2.9.4",
+    "sinon": "^2.1.0"
+  }
+}
