@@ -1,6 +1,6 @@
 {
   "name": "configurapi-handler-http",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Configurapi request handlers for HTTP",
   "main": "src/index",
   "files": [
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/mappies/configurapi-handler-http#readme",
   "dependencies": {
-    "configurapi": "^1.0.0"
+    "configurapi": "^1.0.3"
   },
   "devDependencies": {
     "chai": "^3.5.0",

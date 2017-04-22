@@ -1,5 +1,4 @@
-module.exports = async function(event, headerName, headerValue) 
+module.exports = function(event, headerName, headerValue) 
 {
         event.response.headers[headerName] = headerValue;
-        this.continue();
 };
