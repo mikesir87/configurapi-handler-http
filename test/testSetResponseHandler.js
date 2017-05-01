@@ -8,7 +8,7 @@ describe('setResponseHandler', function() {
     it("Set response properly", async function()
     {    
         let ev = sinon.mock(Configurapi.Event);
-        
+        ev.resolve = (e) => {return e;};        
         ev.response = new Configurapi.Response();
         
         let headers = {'X-Header-1': 'Header value 1', 'X-Header-2': 'Header value 2'};
@@ -23,7 +23,7 @@ describe('setResponseHandler', function() {
     it("Keep existing headers", async function()
     {    
         let ev = sinon.mock(Configurapi.Event);
-        
+        ev.resolve = (e) => {return e;};
         ev.response = new Configurapi.Response();
         ev.response.headers = {'X-Header-3': 'Header value 3'};
         

@@ -1,7 +1,7 @@
 module.exports = function(event, statusCode = 200, body = '', headers = undefined) 
 {
         event.response.statusCode = statusCode;
-        event.response.body = body;
+        event.response.body = event.resolve(body);
         
         if(headers)
         {
