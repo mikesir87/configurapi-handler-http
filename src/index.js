@@ -3,5 +3,5 @@ module.exports = {
     setResponseBodyHandler: require('./setResponseBodyHandler'),
     setResponseHeaderHandler: require('./setResponseHeaderHandler'),
     setResponseHandler: require('./setResponseHandler'),
-    validateEmptyPayloadHandler: require('./validateEmptyPayloadHandler')
+    validateEmptyRequestPayloadHandler: require('./validateEmptyRequestPayloadHandler')
 };

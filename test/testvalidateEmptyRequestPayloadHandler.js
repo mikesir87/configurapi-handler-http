@@ -2,9 +2,9 @@ const assert = require('chai').assert;
 const sinon = require('sinon');
 const Configurapi = require('configurapi');
 
-const validateEmptyPayloadHandler = require('../src/validateEmptyPayloadHandler');
+const validateEmptyRequestPayloadHandler = require('../src/validateEmptyRequestPayloadHandler');
 
-describe('validateEmptyPayloadHandler', function() {
+describe('validateEmptyRequestPayloadHandler', function() {
     it("Empty payload", async function()
     {    
         let ev = sinon.mock(Configurapi.Event);
@@ -16,7 +16,7 @@ describe('validateEmptyPayloadHandler', function() {
         let completeSpy = sinon.spy();
         let context = {continue:continueSpy,complete:completeSpy};
 
-        validateEmptyPayloadHandler.apply(context, [ev]);
+        validateEmptyRequestPayloadHandler.apply(context, [ev]);
 
         assert.equal(200, ev.response.statusCode);
         assert.isFalse(continueSpy.calledOnce);
@@ -35,7 +35,7 @@ describe('validateEmptyPayloadHandler', function() {
         let completeSpy = sinon.spy();
         let context = {continue:continueSpy,complete:completeSpy};
 
-        validateEmptyPayloadHandler.apply(context, [ev]);
+        validateEmptyRequestPayloadHandler.apply(context, [ev]);
 
         assert.equal(400, ev.response.statusCode);
         assert.isFalse(continueSpy.calledOnce);
