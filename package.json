@@ -1,6 +1,6 @@
 {
   "name": "configurapi-handler-http",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "description": "Configurapi request handlers for HTTP",
   "main": "src/index",
   "files": [
