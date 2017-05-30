@@ -3,5 +3,6 @@ module.exports = {
     setResponseBodyHandler: require('./setResponseBodyHandler'),
     setResponseHeaderHandler: require('./setResponseHeaderHandler'),
     setResponseHandler: require('./setResponseHandler'),
-    validateEmptyRequestPayloadHandler: require('./validateEmptyRequestPayloadHandler')
+    validateEmptyRequestPayloadHandler: require('./validateEmptyRequestPayloadHandler'),
+    allowCrossOriginResourceSharingHandler: require('./allowCrossOriginResourceSharingHandler')
 };
