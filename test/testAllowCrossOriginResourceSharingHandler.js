@@ -117,6 +117,9 @@ describe('allowCrossOriginResourceSharingHandler', function() {
         ev.request = new Configurapi.Request();         
         ev.response = new Configurapi.Response();
 
+        ev.method = 'options';
+        ev.request.headers['access-control-request-method'] = 'POST';
+
         setResponseHandler.apply(context, [ev, undefined, 'POST,PUT']);
 
         assert.equal(ev.response.headers['Access-Control-Allow-Methods'], 'POST,PUT');
@@ -134,17 +137,32 @@ describe('allowCrossOriginResourceSharingHandler', function() {
         assert.isFalse('Access-Control-Allow-Methods' in ev.response.headers);
     });
 
-    it("Set method - access-control-request-method presents", async function()
+    it("Set method - access-control-request-method present", async function()
     {    
         let ev = sinon.mock(Configurapi.Event);
         
         ev.request = new Configurapi.Request();         
         ev.response = new Configurapi.Response();
+        ev.method = 'options';
         ev.request.headers = {'access-control-request-method': 'PATCH,DELETE'};
 
         setResponseHandler.apply(context, [ev, undefined, undefined]);
 
         assert.equal(ev.response.headers['Access-Control-Allow-Methods'], 'PATCH,DELETE');
+    });
+
+    it("Set method - not set on non-preflight request", async function()
+    {    
+        let ev = sinon.mock(Configurapi.Event);
+        
+        ev.request = new Configurapi.Request();         
+        ev.response = new Configurapi.Response();
+        ev.method = 'get';
+        ev.request.headers = {'access-control-request-method': 'GET'};
+
+        setResponseHandler.apply(context, [ev, undefined, undefined]);
+
+        assert.isFalse('Access-Control-Allow-Methods' in ev.response.headers);
     });
 
     it("Set allow headers", async function()
@@ -153,6 +171,8 @@ describe('allowCrossOriginResourceSharingHandler', function() {
         
         ev.request = new Configurapi.Request();         
         ev.response = new Configurapi.Response();
+        ev.method = 'options';
+        ev.request.headers = {'access-control-request-method': 'POST'};
 
         setResponseHandler.apply(context, [ev, undefined, undefined, 'X-Header1,X-Header2']);
 
@@ -171,17 +191,37 @@ describe('allowCrossOriginResourceSharingHandler', function() {
         assert.isFalse('Access-Control-Allow-Headers' in ev.response.headers);
     });
 
-    it("Set allow headers - access-control-request-method presents", async function()
+    it("Set allow headers - access-control-request-method present", async function()
     {    
         let ev = sinon.mock(Configurapi.Event);
         
         ev.request = new Configurapi.Request();         
         ev.response = new Configurapi.Response();
-        ev.request.headers = {'access-control-request-headers': 'X-Header3,X-Header4'};
+        ev.method = 'options';
+        ev.request.headers = {
+            'access-control-request-method': 'POST',
+            'access-control-request-headers': 'X-Header3,X-Header4'
+        };
 
         setResponseHandler.apply(context, [ev]);
 
         assert.equal(ev.response.headers['Access-Control-Allow-Headers'], 'X-Header3,X-Header4');
+    });
+
+    it("Set allow headers - not set on non-preflight request", async function()
+    {
+        let ev = sinon.mock(Configurapi.Event);
+        
+        ev.request = new Configurapi.Request();         
+        ev.response = new Configurapi.Response();
+        ev.method = 'get';
+        ev.request.headers = {
+            'access-control-request-headers': 'X-Header3,X-Header4'
+        };
+
+        setResponseHandler.apply(context, [ev]);
+
+        assert.isFalse('Access-Control-Allow-Headers' in ev.response.headers);
     });
 
     it("Set allow credentials", async function()
@@ -214,10 +254,25 @@ describe('allowCrossOriginResourceSharingHandler', function() {
         
         ev.request = new Configurapi.Request();         
         ev.response = new Configurapi.Response();
+        ev.method = 'options';
+        ev.request.headers = {'access-control-request-method': 'POST'};
 
         setResponseHandler.apply(context, [ev, undefined, undefined, undefined, undefined, 100]);
 
         assert.equal(ev.response.headers['Access-Control-Max-Age'], 100);
+    });
+
+    it("Set max age - not set on non-preflight request", async function()
+    {    
+        let ev = sinon.mock(Configurapi.Event);
+        
+        ev.request = new Configurapi.Request();         
+        ev.response = new Configurapi.Response();
+        ev.method = 'get';
+
+        setResponseHandler.apply(context, [ev, undefined, undefined, undefined, undefined, 100]);
+
+        assert.isFalse('Access-Control-Max-Age' in ev.response.headers);
     });
 
     it("Set max age - unset", async function()
@@ -255,4 +310,5 @@ describe('allowCrossOriginResourceSharingHandler', function() {
 
         assert.isFalse('Access-Control-Expose-Headers' in ev.response.headers);
     });
+
 });

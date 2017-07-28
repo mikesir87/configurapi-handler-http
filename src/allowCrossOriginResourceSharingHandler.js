@@ -73,13 +73,22 @@ function setExposeHeaders(event, exposeHeaders)
     }
 }
 
+function isPreflightRequest(event) 
+{
+    return event.method === 'options' && event.request.headers['access-control-request-method'];
+}
+
 module.exports = function(event, allowOrigin, allowMethods, allowHeaders, allowCredentials, maxAge, exposeHeaders) 
 {
-    setAllowMethods(event, allowMethods);
-    setAllowHeaders(event, allowHeaders);
     setAllowOrigin(event, allowOrigin);
 
     setAllowCredentials(event, allowCredentials);
-    setMaxAge(event, maxAge);
     setExposeHeaders(event, exposeHeaders);
+
+    if (isPreflightRequest(event))
+    {
+        setAllowHeaders(event, allowHeaders);
+        setAllowMethods(event, allowMethods);
+        setMaxAge(event, maxAge);
+    }
 };
